@@ -59,6 +59,14 @@ request_id: 1
 }
 
 Delivery:
-- zip with code ?
-- git project ?
-- docker ?
+- git project 
+- docker 
+
+Models:
+- using model "clip-vit-large-patch14"
+
+deploy:
+- from the shared folder take "clip-vit-large-patch14.zip" and deploy it in a folder on your machine. point to the directory in the docker run below. 
+
+Running Docker:
+docker run -v /path/to/host/model:/model -p 8081:8081 your_image_name
