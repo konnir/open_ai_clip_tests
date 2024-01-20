@@ -1,18 +1,18 @@
-# A clip implmentaiton of image / text to embeddings 
+# A clip implementation of image / text to embeddings 
 
 ## General:
-* An open ai clip model implmenatation to get vectors from varios clip models.
+* An open ai clip model implementation to get vectors from various clip models.
 * Can work with any clip model.
 * When running a docker choose your model and it will be downloaded at start (this is a demo to show use of many clip models)
 
 ## Uses cases:
 Rest API is provided to:
-* Embeddings - Send list of images and text, giving back a list of vectors for each input.
+* Embeddings - Send a list of images and text, giving back a list of vectors for each input.
 * Wearable - send image and get the top 3 wearable in this image (based on clip similarity). 
 
 ## Instalation:
 General - 
-1. Choose clip model from hugging face, reccomanded: "https://huggingface.co/openai/clip-vit-large-patch14 "
+1. Choose clip model from hugging face, recommended: "https://huggingface.co/openai/clip-vit-large-patch14 "
 2. download the model.
 3. Place the model folders in /home/models/clip_models
 4. Change the folder names names so you will have: /home/models/clip_models/model-clip and /home/models/clip_models/processor-clip
@@ -24,7 +24,7 @@ Docker -
 ## API:
 ### POST HOST:8081//syte_test/embeddings
 * General:
-    * You can send multipe imageas and texts descriptions, singel image only, singe text only and any other combination.
+    * You can send multiple images and texts descriptions, single image only, singe text only and any other combination.
     * Response will contain the vectors with the keys given by the user. 
 * Input:
     * Headers = request_id, integer (optional)
@@ -42,7 +42,7 @@ Docker -
 
 ### POST HOST:8081//syte_test/wearable
 * General:
-    * You can send image and get the top 3 wearable items inside it from 20 categories (fixed).
+    * You can send an image and get the top 3 wearable items inside it from 20 categories (fixed).
 * Input:
     * Headers = request_id, integer (optional)
     * Body = form-data,(key-value pairs of files or texts)
@@ -57,17 +57,17 @@ Docker -
       }
 
 ## Demo UI:
-* with chrome / other borowser LOCAL_HOST://8081
+* with chrome / other browser LOCAL_HOST://8081
 * upload image
 * get the top categories on the image
   
 ## Limitation:
-This is a **demo program** and as so will be workig under those limitatino (might serve more but not tested on other than the below):
+This is a **demo program** and as so will be working under those limitation (might serve more but not tested on other than the below):
 * Binary file (png or jpg - clip accept more, let's focus for testing purpose, you can send any size since it will be converted to 224x224 anyway and maybe in production we should limit to save our system)
-* Text (english only - max 50 words, clip accept 77 tokens but i'm limiting to focus for testing purposes - for simplicitywe assume 128 ASCII.
+* Text (english only - max 50 words, clip accept 77 tokens but i'm limiting to focus for testing purposes - for simplicity we assume 128 ASCII.
 * Simple server to concentrate the demo on the functionality asked: no implementation of "feedback" API for now, 1 error fits all, not relating to security and user authentication at all, simple logs, counters in the logs - if some or all are expected, please let me know and I will implement? 
 
-## Examplese API:
+## Examples API:
 ### POST HOST:8081//syte_test/embeddings
 example, sending image and description with the same ID:
 
