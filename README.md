@@ -18,8 +18,10 @@ General -
 4. Change the folder names names so you will have: /home/models/clip_models/model-clip and /home/models/clip_models/processor-clip
 
 Docker -
+* Download the image from drive (link sent in email).
+* Load the image to your docker: image 
 * run - docker run -e CLIP_MODEL=TOUR_CLIP_MODEL -p 8081:8081 clip_syte:TAG_NUMBER
-* example - **docker run -e CLIP_MODEL=openai/clip-vit-large-patch14 -p 8081:8081 clip_syte:1.0**
+* example - **docker run -e CLIP_MODEL=openai/clip-vit-large-patch14 -p 8081:8081 clip_syte:1.1**
    
 ## API:
 ### POST HOST:8081//syte_test/embeddings
@@ -60,7 +62,9 @@ Docker -
 * with chrome / other browser LOCAL_HOST://8081
 * upload image
 * get the top categories on the image
-  
+
+![image](https://github.com/konnir/syte_clip/assets/119952960/a562fdd7-4e33-4ea0-a2c9-5ba832b9e131)
+
 ## Limitation:
 This is a **demo program** and as so will be working under those limitation (might serve more but not tested on other than the below):
 * Binary file (png or jpg - clip accept more, let's focus for testing purpose, you can send any size since it will be converted to 224x224 anyway and maybe in production we should limit to save our system)
