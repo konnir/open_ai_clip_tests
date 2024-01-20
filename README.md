@@ -71,6 +71,11 @@ This is a **demo program** and as so will be working under those limitation (mig
 * Text (english only - max 50 words, clip accept 77 tokens but i'm limiting to focus for testing purposes - for simplicity we assume 128 ASCII.
 * Simple server to concentrate the demo on the functionality asked: no implementation of "feedback" API for now, 1 error fits all, not relating to security and user authentication at all, simple logs, counters in the logs - if some or all are expected, please let me know and I will implement? 
 
+### Use in "Postman":
+
+![image](https://github.com/konnir/syte_clip/assets/119952960/d99b4984-02ad-42fe-a76b-f4191007c7a9)
+
+
 ## Examples API:
 ### POST HOST:8081//syte_test/embeddings
 example, sending image and description with the same ID:
