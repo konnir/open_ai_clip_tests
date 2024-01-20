@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h2>Fashion Items Discoverer Using Open AI Clip</h2>
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" id="fileInput" accept="image/*">
+    <!-- Removed the upload button -->
+</form>
+<h3>Preview:</h3>
+<img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 300px;">
+<h3>Top Categories:</h3>
+<div id="categories"></div>
+
+<script>
+    $(document).ready(function () {
+        $('#uploadForm').submit(function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: 'http://127.0.0.1:8000/syte_test/wearable',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $('#categories').empty();
+                    data.top_categories.forEach(function (category) {
+                        $('#categories').append('<p style="color: blue;">' + category + '</p>'); // Categories in blue
+                    });
+                },
+                error: function () {
+                    $('#categories').text('Error in processing. Try again.');
+                }
+            });
+        });
+
+        $('#fileInput').change(function () {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imagePreview').attr('src', e.target.result).show();
+                // Trigger form submission
+                $('#uploadForm').submit();
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+    });
+</script>
+</body>
+</html>
