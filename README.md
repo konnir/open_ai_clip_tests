@@ -20,6 +20,7 @@ General -
 Docker -
 * Download the image from drive (link sent in email).
 * Load the image to your docker: **docker load -i <input_file.tar> **
+* Example: docker load -i clip_syte_1_1.tar
 * run - docker run -e CLIP_MODEL=TOUR_CLIP_MODEL -p 8081:8081 clip_syte:TAG_NUMBER
 * example - **docker run -e CLIP_MODEL=openai/clip-vit-large-patch14 -p 8081:8081 clip_syte:1.1**
    
