@@ -10,7 +10,7 @@ RUN mkdir -p /app/templates
 # Copy the current directory contents into the container at /usr/src/app
 COPY *.py /usr/src/app/
 COPY requirements.txt /usr/src/app/
-COPY templates/index.html /usr/src/app/templates
+COPY templates/index.html /usr/src/app/templates/
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --upgrade pip
