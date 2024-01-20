@@ -1,7 +1,9 @@
-# A clip implmentaiton or image / text to embeddings 
+# A clip implmentaiton of image / text to embeddings 
 
 ## General:
-An open ai clip model implmenatation to get vectors from varios clip models. 
+* An open ai clip model implmenatation to get vectors from varios clip models.
+* Can work with any clip model.
+* When running a docker choose your model and it will be downloaded at start (this is a demo to show use of many clip models)
 
 ## Uses cases:
 Rest API is provided to:
@@ -54,6 +56,11 @@ Docker -
            "top_categories": [...]
       }
 
+## Demo UI:
+* with chrome / other borowser LOCAL_HOST://8081
+* upload image
+* get the top categories on the image
+  
 ## Limitation:
 This is a **demo program** and as so will be workig under those limitatino (might serve more but not tested on other than the below):
 * Binary file (png or jpg - clip accept more, let's focus for testing purpose, you can send any size since it will be converted to 224x224 anyway and maybe in production we should limit to save our system)
