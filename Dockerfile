@@ -1,27 +1,41 @@
-# Use a base Docker image (e.g., Python)
-FROM python:3.10-slim-buster
+# Stage 1: Setup the base with Python 3.10 and install PyTorch
+FROM python:3.10-slim-buster as builder
 
-# Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Create a directory index.html
-RUN mkdir -p /app/templates
+# Copy the requirements file
+COPY requirements.txt .
 
-# Copy the current directory contents into the container at /usr/src/app
-COPY *.py /usr/src/app/
-COPY requirements.txt /usr/src/app/
-COPY templates/index.html /usr/src/app/templates/
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+# Install PyTorch and other Python packages
+RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu \
+    && pip install --no-cache-dir -r requirements.txt
 
-# Cleaning up - not to inflate the docker image
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
+# Stage 2: Prepare the runtime environment
+FROM python:3.10-slim-buster
 
-# Make port 8081 available to the world outside this container
+WORKDIR /usr/src/app
+
+# Copy installed packages from builder
+COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
+
+# Copy application files
+COPY ./*.py /usr/src/app/
+COPY templates/index.html /app/templates/
+COPY static/* /usr/src/app/static/
+
+# Cleaning up to keep the image clean and compact
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Expose the port the app runs on
 EXPOSE 8081
 
-# Specify the command to run your application
+# Command to run the application
 CMD ["python", "./clip_server.py"]

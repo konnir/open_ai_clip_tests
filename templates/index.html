@@ -4,26 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Upload</title>
+    <style>
+        .content {
+            display: flex;
+            align-items: flex-start;
+        }
+        #imagePreview {
+            max-width: 600px; /* Adjusted as per your existing style */
+            margin-right: 20px; /* Adds space between the image and categories */
+            display: none; /* Will be displayed via JavaScript */
+        }
+        #categories {
+            flex-grow: 1;
+            font-size: 1.5em; /* Increase font size for category text */
+        }
+    </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<h2>Fashion Items Discoverer Using Open AI Clip</h2>
+<img src="/static/images/Nir_Kon_Logo.png" alt="Descriptive Text" class="header-image" style="max-width: 8%; height: auto;">
+<h1>Fashion Items Discoverer Using Open AI Clip</h1>
 <form id="uploadForm" enctype="multipart/form-data">
     <input type="file" name="file" id="fileInput" accept="image/*">
-    <!-- Removed the upload button -->
+    <button type="button" id="demoButton">Demo</button> <!-- Added Demo Button -->
 </form>
-<h3>Preview:</h3>
-<img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 300px;">
-<h3>Top Categories:</h3>
-<div id="categories"></div>
+<div class="content">
+    <div>
+        <h3>Preview:</h3>
+        <img id="imagePreview" src="#" alt="Image Preview">
+    </div>
+    <div>
+        <h3>Top Categories:</h3>
+        <div id="categories"></div>
+    </div>
+</div>
 
 <script>
     $(document).ready(function () {
+        var demoImages = ['image1.png', 'image2.png', 'image3.png', 'image4.png', 'image5.png', 'image6.png', 'image7.png', 'image8.png', 'image9.png'];
+        var lastImageIndex = -1; // Initialize with an invalid index
+
+        $('#demoButton').click(function() {
+
+            // Filter out the last selected image
+            var availableImages = demoImages.filter(function(value, index) {
+                return index !== lastImageIndex;
+            });
+
+            // Select a random image from the filtered list
+            var randomIndex = Math.floor(Math.random() * availableImages.length);
+            var randomImage = availableImages[randomIndex];
+            var imagePath = '/static/demo_images/' + randomImage;
+
+            // Clear existing image preview
+            $('#imagePreview').hide(); // Hide the image element
+            $('#imagePreview').attr('src', ''); // Clear the src attribute
+
+            // Fetch the image file from the server as a Blob
+            fetch(imagePath)
+                .then(response => response.blob())
+                .then(blob => {
+                    // Create a File object from the Blob
+                    var file = new File([blob], randomImage, { type: "image/png" }); // Update the type if your images are not PNG
+                    var formData = new FormData();
+                    formData.append('file', file);
+
+                    // Set image preview with the new imagePath after ensuring the image is loaded
+                    var objectURL = URL.createObjectURL(blob);
+                    $('#imagePreview').on('load', function() {
+                        $(this).show(); // Only show the image when it's fully loaded
+                    }).attr('src', objectURL);
+
+                    // Submit the form using jQuery's ajax method
+                    $.ajax({
+                        url: `${window.location.protocol}//${window.location.hostname}/syte_test/wearable`,
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            $('#categories').empty();
+                            data.top_categories.forEach(function (category) {
+                                $('#categories').append('<p style="color: blue;">' + category + '</p>'); // Categories in blue
+                            });
+                        },
+                        error: function () {
+                            $('#categories').text('Error in processing. Try again.');
+                        }
+                    });
+                });
+        });
+
         $('#uploadForm').submit(function (event) {
             event.preventDefault();
             var formData = new FormData(this);
+            if ($('#fileInput').get(0).files.length === 0) {
+                formData.append('file', $('#imagePreview').attr('src')); // Append demo image source if no file is chosen
+            }
             $.ajax({
-                url: 'http://0.0.0.0:8081/syte_test/wearable',
+                url: `${window.location.protocol}//${window.location.hostname}/syte_test/wearable`',
                 type: 'POST',
                 data: formData,
                 contentType: false,
