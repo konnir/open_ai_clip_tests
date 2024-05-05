@@ -26,8 +26,8 @@ COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/pytho
 
 # Copy application files
 COPY ./*.py /usr/src/app/
-COPY templates/index.html /app/templates/
-COPY static/* /usr/src/app/static/
+COPY templates/index.html /usr/src/app/templates/
+COPY static/. /usr/src/app/static
 
 # Cleaning up to keep the image clean and compact
 RUN apt-get update && apt-get install -y --no-install-recommends \

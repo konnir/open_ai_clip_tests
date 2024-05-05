@@ -40,11 +40,11 @@
 </div>
 
 <script>
-    $(document).ready(function () {
+    document.addEventListener("DOMContentLoaded", function() {
         var demoImages = ['image1.png', 'image2.png', 'image3.png', 'image4.png', 'image5.png', 'image6.png', 'image7.png', 'image8.png', 'image9.png'];
         var lastImageIndex = -1; // Initialize with an invalid index
 
-        $('#demoButton').click(function() {
+        document.getElementById('demoButton').addEventListener('click', function() {
 
             // Filter out the last selected image
             var availableImages = demoImages.filter(function(value, index) {
@@ -57,8 +57,8 @@
             var imagePath = '/static/demo_images/' + randomImage;
 
             // Clear existing image preview
-            $('#imagePreview').hide(); // Hide the image element
-            $('#imagePreview').attr('src', ''); // Clear the src attribute
+            document.getElementById('imagePreview').style.display = 'none'; // Hide the image element
+            document.getElementById('imagePreview').setAttribute('src', ''); // Clear the src attribute
 
             // Fetch the image file from the server as a Blob
             fetch(imagePath)
@@ -71,60 +71,66 @@
 
                     // Set image preview with the new imagePath after ensuring the image is loaded
                     var objectURL = URL.createObjectURL(blob);
-                    $('#imagePreview').on('load', function() {
-                        $(this).show(); // Only show the image when it's fully loaded
-                    }).attr('src', objectURL);
+                    document.getElementById('imagePreview').onload = function() {
+                        this.style.display = 'block'; // Only show the image when it's fully loaded
+                    };
+                    document.getElementById('imagePreview').setAttribute('src', objectURL);
 
-                    // Submit the form using jQuery's ajax method
-                    $.ajax({
-                        url: `${window.location.protocol}//${window.location.hostname}/syte_test/wearable`,
-                        type: 'POST',
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        success: function (data) {
-                            $('#categories').empty();
-                            data.top_categories.forEach(function (category) {
-                                $('#categories').append('<p style="color: blue;">' + category + '</p>'); // Categories in blue
-                            });
-                        },
-                        error: function () {
-                            $('#categories').text('Error in processing. Try again.');
-                        }
+                    // Submit the form using JavaScript's fetch method
+<!--                    fetch(`http://${window.location.hostname}:8081/syte_test/wearable`, {-->
+                    fetch(`${window.location.protocol}//${window.location.hostname}/syte_test/wearable`, {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        var categories = document.getElementById('categories');
+                        categories.innerHTML = '';
+                        data.top_categories.forEach(function (category) {
+                            var p = document.createElement('p');
+                            p.style.color = 'blue';
+                            p.textContent = category;
+                            categories.appendChild(p);
+                        });
+                    })
+                    .catch(error => {
+                        document.getElementById('categories').textContent = 'Error in processing. Try again.';
                     });
                 });
         });
 
-        $('#uploadForm').submit(function (event) {
+        document.getElementById('uploadForm').addEventListener('submit', function (event) {
             event.preventDefault();
             var formData = new FormData(this);
-            if ($('#fileInput').get(0).files.length === 0) {
-                formData.append('file', $('#imagePreview').attr('src')); // Append demo image source if no file is chosen
+            if (document.getElementById('fileInput').files.length === 0) {
+                formData.append('file', document.getElementById('imagePreview').getAttribute('src')); // Append demo image source if no file is chosen
             }
-            $.ajax({
-                url: `${window.location.protocol}//${window.location.hostname}/syte_test/wearable`',
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    $('#categories').empty();
-                    data.top_categories.forEach(function (category) {
-                        $('#categories').append('<p style="color: blue;">' + category + '</p>'); // Categories in blue
-                    });
-                },
-                error: function () {
-                    $('#categories').text('Error in processing. Try again.');
-                }
+            fetch(`${window.location.protocol}//${window.location.hostname}/syte_test/wearable`, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                var categories = document.getElementById('categories');
+                categories.innerHTML = '';
+                data.top_categories.forEach(function (category) {
+                    var p = document.createElement('p');
+                    p.style.color = 'blue';
+                    p.textContent = category;
+                    categories.appendChild(p);
+                });
+            })
+            .catch(error => {
+                document.getElementById('categories').textContent = 'Error in processing. Try again.';
             });
         });
 
-        $('#fileInput').change(function () {
+        document.getElementById('fileInput').addEventListener('change', function () {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#imagePreview').attr('src', e.target.result).show();
+                document.getElementById('imagePreview').setAttribute('src', e.target.result);
                 // Trigger form submission
-                $('#uploadForm').submit();
+                document.getElementById('uploadForm').submit();
             };
             reader.readAsDataURL(this.files[0]);
         });
