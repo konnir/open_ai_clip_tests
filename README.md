@@ -6,7 +6,7 @@
 * When running a docker choose your model and it will be downloaded at start (this is a demo to show use of many clip models)
 
 DEMO UI: 
-[http://clip.nir-kon.com]([https://loading-proxy-iu5vx2gsqa-uc.a.run.app/get?url=https://parallel-llm-queue-iu5vx2gsqa-uc.a.run.app](https://loading-proxy-iu5vx2gsqa-uc.a.run.app/get?url=https://clip-fashion-iu5vx2gsqa-uc.a.run.app/))
+[http://clip.nir-kon.com](https://loading-proxy-iu5vx2gsqa-uc.a.run.app/get?url=https://clip-fashion-iu5vx2gsqa-uc.a.run.app/)
 
 ![image](https://github.com/konnir/open_ai_clip_tests/assets/119952960/2a153461-279b-469d-9d8e-ea317de930c7)
 
