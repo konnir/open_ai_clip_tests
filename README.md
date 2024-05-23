@@ -5,6 +5,10 @@
 * Can work with any clip model.
 * When running a docker choose your model and it will be downloaded at start (this is a demo to show use of many clip models)
 
+DEMO UI: https://loading-proxy-iu5vx2gsqa-uc.a.run.app/get?url=https://clip-fashion-iu5vx2gsqa-uc.a.run.app/
+
+![image](https://github.com/konnir/open_ai_clip_tests/assets/119952960/2a153461-279b-469d-9d8e-ea317de930c7)
+
 ## Uses cases:
 Rest API is provided to:
 * Embeddings - Send a list of images and text, giving back a list of vectors for each input.
