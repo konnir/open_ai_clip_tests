@@ -2,6 +2,8 @@
 
 # A clip implementation of image / text to embeddings 
 
+![image](https://github.com/konnir/open_ai_clip_tests/assets/119952960/94f7f6b4-53b3-4263-a08c-c14bcaac2e05)
+
 ## General:
 * An open ai clip model implementation to get vectors from various clip models.
 * Can work with any clip model.
