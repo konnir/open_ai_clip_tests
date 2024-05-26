@@ -1,3 +1,5 @@
+<img src="https://github.com/konnir/meat_the_end_ex/assets/119952960/80074eb6-cde0-46c2-9a6f-80524d20d8c7" width="150"/>
+
 # A clip implementation of image / text to embeddings 
 
 ## General:
