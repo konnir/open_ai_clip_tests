@@ -1,9 +1,16 @@
+<img src="https://github.com/konnir/meat_the_end_ex/assets/119952960/80074eb6-cde0-46c2-9a6f-80524d20d8c7" width="150"/>
+
 # A clip implementation of image / text to embeddings 
+
+![image](https://github.com/konnir/open_ai_clip_tests/assets/119952960/94f7f6b4-53b3-4263-a08c-c14bcaac2e05)
 
 ## General:
 * An open ai clip model implementation to get vectors from various clip models.
 * Can work with any clip model.
 * When running a docker choose your model and it will be downloaded at start (this is a demo to show use of many clip models)
+
+DEMO UI: 
+[http://clip.nir-kon.com](https://loading-proxy-iu5vx2gsqa-uc.a.run.app/get?url=https://clip-fashion-iu5vx2gsqa-uc.a.run.app/)
 
 ## Uses cases:
 Rest API is provided to:
